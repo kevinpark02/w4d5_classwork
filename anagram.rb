@@ -12,13 +12,14 @@ end
 p first_anagram?("gizmo", "sally")    #=> false
 p first_anagram?("elvis", "lives")    #=> true
 
-#Phase II, Time Complexity: n * a^3  + n
+#Phase II, Time Complexity: O(n^2)
 def second_anagram?(str1,str2)
     key = str2.split("")
     str1.each_char do |char|
-        if key.find_index(char) != nil
-            idx = key.find_index(char)
-            key.delete_at(idx)
+        found_key = key.find_index(char)
+        if found_key != nil
+
+            key.delete_at(found_key)
         end
     end
     key.empty?
@@ -55,6 +56,8 @@ p fourth_anagram?("elvis", "lives")    #=> true
 def fourth_anagram_b?(str1,str2)
     hash = Hash.new(0)
     str1.each_char { |char| hash[char] += 1 }
-    str2.each_char { |char| hash[char] += 1 }
-    hash.values.all?{|val| val>=2 && val.even?}
+    str2.each_char { |char| hash[char] -= 1 }
+    hash.values.all?{|val| val == 0}#>=2 && val.even?}
 end
+
+
